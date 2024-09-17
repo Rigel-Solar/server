@@ -20,16 +20,18 @@ public class BaseRepository<T> where T : class
         return _dbSet.ToList();
     }
 
-    public void Add(T entity)
+    public T Add(T entity)
     {
         _context.Set<T>().Add(entity);
         Save();
+        return entity;
     }
 
-    public void Update(T entity) 
+    public T Update(T entity) 
     {
         _context.Set<T>().Update(entity);
         Save();
+        return entity;
     }
 
     public async Task Delete(int id)

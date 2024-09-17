@@ -1,4 +1,7 @@
-﻿namespace RigelSolarAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace RigelSolarAPI.Models;
 
 public partial class IdadeTelhado
 {
@@ -6,5 +9,5 @@ public partial class IdadeTelhado
 
     public int Idade { get; set; }
 
-    public virtual ICollection<FichaFotovoltaico> FichaFotovoltaicos { get; set; } = new List<FichaFotovoltaico>();
+    public virtual FichaFotovoltaico? FichaFotovoltaico { get; set; }
 }

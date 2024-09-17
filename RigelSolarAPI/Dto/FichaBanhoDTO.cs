@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace RigelSolarAPI.Dto;
 
-namespace RigelSolarAPI.Models;
-
-public partial class FichaBanho
+public class FichaBanhoDTO
 {
-    public int Id { get; set; }
-
     public decimal BaseCaixa { get; set; }
 
     public decimal BaseBoiler { get; set; }
@@ -20,8 +15,4 @@ public partial class FichaBanho
     public decimal DisjuntorBipolar { get; set; }
 
     public int? IdVistoria { get; set; }
-
-    public virtual ICollection<Foto> Fotos { get; set; } = new List<Foto>();
-
-    public virtual Vistorium? IdVistoriaNavigation { get; set; }
 }

@@ -19,6 +19,10 @@ builder.Services.AddDbContext<RigelSolarContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ClienteRepository>();
+builder.Services.AddScoped<TecnicoRepository>();
+builder.Services.AddScoped<UsuarioRepository>();
+builder.Services.AddScoped<FichaBanhoRepository>();
+builder.Services.AddScoped<FichaPiscinaRepository>();
 
 var app = builder.Build();
 

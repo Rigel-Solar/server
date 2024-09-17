@@ -1,4 +1,7 @@
-﻿namespace RigelSolarAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace RigelSolarAPI.Models;
 
 public partial class Vistorium
 {

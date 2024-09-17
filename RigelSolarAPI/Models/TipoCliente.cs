@@ -1,4 +1,7 @@
-﻿namespace RigelSolarAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace RigelSolarAPI.Models;
 
 public partial class TipoCliente
 {
@@ -6,5 +9,5 @@ public partial class TipoCliente
 
     public string Tipo { get; set; } = null!;
 
-    public virtual ICollection<FichaFotovoltaico> FichaFotovoltaicos { get; set; } = new List<FichaFotovoltaico>();
+    public virtual FichaFotovoltaico? FichaFotovoltaico { get; set; }
 }

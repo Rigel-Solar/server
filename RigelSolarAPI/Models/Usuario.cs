@@ -1,4 +1,7 @@
-﻿namespace RigelSolarAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace RigelSolarAPI.Models;
 
 public partial class Usuario
 {
@@ -10,5 +13,7 @@ public partial class Usuario
 
     public string? Senha { get; set; }
 
-    public virtual ICollection<Tecnico> Tecnicos { get; set; } = new List<Tecnico>();
+    public virtual Gestor? Gestor { get; set; }
+
+    public virtual Tecnico? Tecnico { get; set; }
 }

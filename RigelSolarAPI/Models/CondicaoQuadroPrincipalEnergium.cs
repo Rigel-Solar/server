@@ -6,5 +6,5 @@ public partial class CondicaoQuadroPrincipalEnergium
 
     public string Condicao { get; set; } = null!;
 
-    public virtual ICollection<FichaFotovoltaico> FichaFotovoltaicos { get; set; } = new List<FichaFotovoltaico>();
+    public virtual FichaFotovoltaico? FichaFotovoltaico { get; set; }
 }
