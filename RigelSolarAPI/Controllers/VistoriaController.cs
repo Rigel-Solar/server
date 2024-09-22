@@ -9,22 +9,22 @@ namespace RigelSolarAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TecnicoController : ApiController
+    public class VistoriaController : ApiController
     {
-        private readonly TecnicoRepository _tecnicoRepository;
+        private readonly VistoriaRepository _vistoriaRepository;
         private readonly IMapper _mapper;
 
-        public TecnicoController(
-            TecnicoRepository tecnicoRepository,
+        public VistoriaController(
+            VistoriaRepository vistoriaRepository,
             IMapper mapper
-        ) 
+        )
         {
-            _tecnicoRepository = tecnicoRepository;
+            _vistoriaRepository = vistoriaRepository;
             _mapper = mapper;
         }
 
         /// <summary>
-        ///     Retorna os técnicos da aplicação
+        ///     Retorna as vistorias da aplicação
         /// </summary>
         /// 
         /// 
@@ -33,10 +33,74 @@ namespace RigelSolarAPI.Controllers
         /// 
         /// <returns> Clientes </returns>
         /// 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<GetTecnicoDTO>), StatusCodes.Status200OK)]
+        [HttpGet("getAll")]
+        [ProducesResponseType(typeof(List<GetVistoriaDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Get() 
+        public IActionResult GetAll()
+        {
+            var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
+
+            var isGestor = VerifyUser.IsGestor(type);
+
+            var isCoordenador = VerifyUser.IsCoordenador(type);
+
+            if (isGestor.IsError && isCoordenador.IsError)
+            {
+                return Problem(isGestor.Errors);
+            }
+            var vistorias = _vistoriaRepository.GetAll();
+            
+            var mappedVistorias = _mapper.Map<List<GetVistoriaDTO>>(vistorias);
+
+            return Ok(mappedVistorias);
+        }
+
+        /// <summary>
+        ///     Retorna as vistorias de um técnico da aplicação
+        /// </summary>
+        /// 
+        /// 
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
+        /// 
+        /// <returns> Clientes </returns>
+        /// 
+        [HttpGet("getByTecnicoId")]
+        [ProducesResponseType(typeof(List<GetVistoriaDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public IActionResult GetByTecnicoId()
+        {
+            var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
+
+            var isTecnico = VerifyUser.IsTecnico(type);
+
+            if (isTecnico.IsError)
+            {
+                return Problem(isTecnico.Errors);
+            }
+
+            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "sub")?.Value!);
+            
+            var vistorias = _vistoriaRepository.GetAllByTecnicoId(tecnicoId);
+
+            var mappedVistorias = _mapper.Map<List<GetVistoriaDTO>>(vistorias);
+
+            return Ok(mappedVistorias);
+        }
+
+        /// <summary>
+        ///     Cria as vistorias da aplicação
+        /// </summary>
+        /// 
+        /// 
+        /// <response code="200">Sucesso</response>
+        /// <response code="400">Erro</response>
+        /// 
+        /// <returns> Ok </returns>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        public IActionResult Create(VistoriaDTO vistoria)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -49,49 +113,15 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isGestor.Errors);
             }
 
-            var tecnicos = _tecnicoRepository.GetAll();
+            var mappedVistoria = _mapper.Map<Vistorium>(vistoria);
 
-            var mappedTecnicos = _mapper.Map<List<GetTecnicoDTO>>(tecnicos);
-
-            return Ok(mappedTecnicos);
-        }
-
-        /// <summary>
-        ///     Cria técnico da aplicação
-        /// </summary>
-        /// 
-        /// 
-        /// <response code="200">Sucesso</response>
-        /// <response code="400">Erro</response>
-        /// 
-        /// <returns> Ok </returns>
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Create(TecnicoDTO tecnico)
-        {
-            var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
-
-            var isCoordenador = VerifyUser.IsCoordenador(type);
-
-            if (isCoordenador.IsError)
-            {
-                return Problem(isCoordenador.Errors);
-            }
-
-            var tecnicoMapeado = _mapper.Map<Tecnico>(tecnico);
-
-            var usuarioMapeado = _mapper.Map<Usuario>(tecnico.Usuario);
-
-            tecnicoMapeado.IdUsuarioNavigation = usuarioMapeado;
-            
-            _tecnicoRepository.Add(tecnicoMapeado);
+            _vistoriaRepository.Add(mappedVistoria);
 
             return Ok();
         }
 
         /// <summary>
-        ///     Atualiza os técnicos da aplicação
+        ///     Atualiza as vistorias da aplicação
         /// </summary>
         /// 
         /// 
@@ -102,26 +132,28 @@ namespace RigelSolarAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(TecnicoDTO tecnico)
+        public IActionResult Update(VistoriaDTO vistoria)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
+            var isGestor = VerifyUser.IsGestor(type);
+
             var isCoordenador = VerifyUser.IsCoordenador(type);
 
-            if (isCoordenador.IsError)
+            if (isGestor.IsError && isCoordenador.IsError)
             {
-                return Problem(isCoordenador.Errors);
+                return Problem(isGestor.Errors);
             }
 
-            var tecnicoMapeado = _mapper.Map<Tecnico>(tecnico);
+            var mappedVistoria = _mapper.Map<Vistorium>(vistoria);
 
-            _tecnicoRepository.Update(tecnicoMapeado);
+            _vistoriaRepository.Update(mappedVistoria);
 
             return Ok();
         }
 
         /// <summary>
-        ///     Deleta os técnicos da aplicação
+        ///     Deleta as vistorias da aplicação
         /// </summary>
         /// 
         /// 
@@ -136,14 +168,16 @@ namespace RigelSolarAPI.Controllers
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
+            var isGestor = VerifyUser.IsGestor(type);
+
             var isCoordenador = VerifyUser.IsCoordenador(type);
 
-            if (isCoordenador.IsError)
+            if (isGestor.IsError && isCoordenador.IsError)
             {
-                return Problem(isCoordenador.Errors);
+                return Problem(isGestor.Errors);
             }
 
-            await  _tecnicoRepository.Delete(id);
+            await _vistoriaRepository.Delete(id);
 
             return Ok();
         }

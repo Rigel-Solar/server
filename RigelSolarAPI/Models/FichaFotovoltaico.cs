@@ -1,4 +1,7 @@
-﻿namespace RigelSolarAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace RigelSolarAPI.Models;
 
 public partial class FichaFotovoltaico
 {
@@ -86,6 +89,8 @@ public partial class FichaFotovoltaico
 
     public int? IdTipoSuperficie { get; set; }
 
+    public int? IdVistoria { get; set; }
+
     public virtual ICollection<Foto> Fotos { get; set; } = new List<Foto>();
 
     public virtual CondicaoPadraoEntradum? IdCondicaoPadraoEntradaNavigation { get; set; }
@@ -113,4 +118,6 @@ public partial class FichaFotovoltaico
     public virtual TipoLigacao? IdTipoLigacaoNavigation { get; set; }
 
     public virtual TipoSuperficie? IdTipoSuperficieNavigation { get; set; }
+
+    public virtual Vistorium? IdVistoriaNavigation { get; set; }
 }

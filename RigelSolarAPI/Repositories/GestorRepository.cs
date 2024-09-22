@@ -4,19 +4,19 @@ using RigelSolarAPI.Models;
 
 namespace RigelSolarAPI.Repositories;
 
-public class TecnicoRepository : BaseRepository<Tecnico>
+public class GestorRepository : BaseRepository<Gestor>
 {
-    public TecnicoRepository(RigelSolarContext context) : base(context)
+    public GestorRepository(RigelSolarContext context) : base(context)
     {
     }
 
-    public async Task<Tecnico?> VerDadosPorEmail(string email)
+    public async Task<Gestor?> VerDadosPorEmail(string email)
     {
-        Tecnico? tecnico = await _context
-            .Tecnicos
+        Gestor? gestor = await _context
+            .Gestors
             .Include(x => x.IdUsuarioNavigation)
             .FirstOrDefaultAsync(x => x.IdUsuarioNavigation.Email == email);
 
-        return tecnico;
+        return gestor;
     }
 }

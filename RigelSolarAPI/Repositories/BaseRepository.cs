@@ -6,7 +6,7 @@ namespace RigelSolarAPI.Repositories;
 
 public class BaseRepository<T> where T : class
 {
-    private readonly RigelSolarContext _context;
+    protected readonly RigelSolarContext _context;
     private readonly DbSet<T> _dbSet;
 
     public BaseRepository(RigelSolarContext context)

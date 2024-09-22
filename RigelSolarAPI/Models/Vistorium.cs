@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace RigelSolarAPI.Models;
+﻿namespace RigelSolarAPI.Models;
 
 public partial class Vistorium
 {
@@ -13,7 +10,19 @@ public partial class Vistorium
 
     public int? IdCliente { get; set; }
 
+    public string TipoInstalacao { get; set; } = null!;
+
+    public string Solucoes { get; set; } = null!;
+
+    public string PretendeInstalarEm { get; set; } = null!;
+
+    public decimal ValorContaLuz { get; set; }
+
+    public string? Comentarios { get; set; }
+
     public virtual ICollection<FichaBanho> FichaBanhos { get; set; } = new List<FichaBanho>();
+
+    public virtual ICollection<FichaFotovoltaico> FichaFotovoltaicos { get; set; } = new List<FichaFotovoltaico>();
 
     public virtual ICollection<FichaPiscina> FichaPiscinas { get; set; } = new List<FichaPiscina>();
 

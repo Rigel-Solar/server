@@ -2,8 +2,11 @@
 
 public class TecnicoDTO
 {
-    public int Id { get; set; }
-
     public string Crea { get; set; } = null!;
-    public UsuarioDTO? Usuario { get; set; }
+    public GetUsuarioDTO? Usuario { get; set; }
+}
+
+public class GetTecnicoDTO : TecnicoDTO 
+{
+    public int Id { get; set; }
 }

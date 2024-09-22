@@ -68,7 +68,7 @@ public partial class RigelSolarContext : DbContext
     {
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Cliente__3213E83F5BE756B1");
+            entity.HasKey(e => e.Id).HasName("PK__Cliente__3213E83FA5660525");
 
             entity.ToTable("Cliente");
 
@@ -99,7 +99,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<CondicaoPadraoEntradum>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83F0E21FA0B");
+            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83F27BBF75B");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Condicao)
@@ -108,9 +108,9 @@ public partial class RigelSolarContext : DbContext
                 .HasColumnName("condicao");
         });
 
-        modelBuilder.Entity<CondicaoQuadroPrincipalDTO>(entity =>
+        modelBuilder.Entity<CondicaoQuadroPrincipalEnergium>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83FF193FD67");
+            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83F79C90502");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Condicao)
@@ -121,7 +121,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<CondicaoViga>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83F0B299501");
+            entity.HasKey(e => e.Id).HasName("PK__Condicao__3213E83F18C94107");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Condicao)
@@ -132,13 +132,13 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<Coordenador>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Coordena__3213E83F75626626");
+            entity.HasKey(e => e.Id).HasName("PK__Coordena__3213E83F995B54C0");
 
             entity.ToTable("Coordenador");
 
-            entity.HasIndex(e => e.IdTecnico, "UQ__Coordena__295BEDE5FA7AC39B").IsUnique();
+            entity.HasIndex(e => e.IdTecnico, "UQ__Coordena__295BEDE5D961F22F").IsUnique();
 
-            entity.HasIndex(e => e.IdGestor, "UQ__Coordena__7AEBF385E1457251").IsUnique();
+            entity.HasIndex(e => e.IdGestor, "UQ__Coordena__7AEBF3854EE170CD").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdGestor).HasColumnName("idGestor");
@@ -155,7 +155,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<FichaBanho>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FichaBan__3213E83F444E4840");
+            entity.HasKey(e => e.Id).HasName("PK__FichaBan__3213E83F3455AD4A");
 
             entity.ToTable("FichaBanho");
 
@@ -185,35 +185,35 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<FichaFotovoltaico>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FichaFot__3213E83FE7C68390");
+            entity.HasKey(e => e.Id).HasName("PK__FichaFot__3213E83F1707FE42");
 
             entity.ToTable("FichaFotovoltaico");
 
-            entity.HasIndex(e => e.IdTipoLigacao, "UQ__FichaFot__101C83B6A60A4BC9").IsUnique();
+            entity.HasIndex(e => e.IdTipoLigacao, "UQ__FichaFot__101C83B65D127A29").IsUnique();
 
-            entity.HasIndex(e => e.IdCondicaoQuadroPrincipalEnergia, "UQ__FichaFot__407847C58367C23D").IsUnique();
+            entity.HasIndex(e => e.IdCondicaoQuadroPrincipalEnergia, "UQ__FichaFot__407847C5009B9147").IsUnique();
 
-            entity.HasIndex(e => e.IdMaterialVigasTelhado, "UQ__FichaFot__4858726D9DDFDFBD").IsUnique();
+            entity.HasIndex(e => e.IdMaterialVigasTelhado, "UQ__FichaFot__4858726D35F19C01").IsUnique();
 
-            entity.HasIndex(e => e.IdModeloRelogio, "UQ__FichaFot__4B6E58560E34F3E6").IsUnique();
+            entity.HasIndex(e => e.IdModeloRelogio, "UQ__FichaFot__4B6E5856A9316B8D").IsUnique();
 
-            entity.HasIndex(e => e.IdCondicaoPadraoEntrada, "UQ__FichaFot__5F97740B7D23F7E3").IsUnique();
+            entity.HasIndex(e => e.IdCondicaoPadraoEntrada, "UQ__FichaFot__5F97740B92F34006").IsUnique();
 
-            entity.HasIndex(e => e.IdNivelamentoSolo, "UQ__FichaFot__6E88DD6E2AC4227D").IsUnique();
+            entity.HasIndex(e => e.IdNivelamentoSolo, "UQ__FichaFot__6E88DD6E05452843").IsUnique();
 
-            entity.HasIndex(e => e.IdTipoSuperficie, "UQ__FichaFot__712490DBF77C5429").IsUnique();
+            entity.HasIndex(e => e.IdTipoSuperficie, "UQ__FichaFot__712490DB2859D93F").IsUnique();
 
-            entity.HasIndex(e => e.IdIdadeTelhado, "UQ__FichaFot__7BE0E3D4DFA78F7B").IsUnique();
+            entity.HasIndex(e => e.IdIdadeTelhado, "UQ__FichaFot__7BE0E3D42742E999").IsUnique();
 
-            entity.HasIndex(e => e.IdCondicaoVigas, "UQ__FichaFot__85EFE688A5471CDD").IsUnique();
+            entity.HasIndex(e => e.IdCondicaoVigas, "UQ__FichaFot__85EFE688C3AAC183").IsUnique();
 
-            entity.HasIndex(e => e.IdTensaoNominal, "UQ__FichaFot__995C2CA5725A2F95").IsUnique();
+            entity.HasIndex(e => e.IdTensaoNominal, "UQ__FichaFot__995C2CA5E37FDDC5").IsUnique();
 
-            entity.HasIndex(e => e.IdTelhadoAcesso, "UQ__FichaFot__ADDAC39850DA0B7F").IsUnique();
+            entity.HasIndex(e => e.IdTelhadoAcesso, "UQ__FichaFot__ADDAC398B08DA7FB").IsUnique();
 
-            entity.HasIndex(e => e.IdLocalInstalacaoModulos, "UQ__FichaFot__CC32E0BA7C21288E").IsUnique();
+            entity.HasIndex(e => e.IdLocalInstalacaoModulos, "UQ__FichaFot__CC32E0BA00C25C25").IsUnique();
 
-            entity.HasIndex(e => e.IdTipoCliente, "UQ__FichaFot__FE7DCABD3A56FD13").IsUnique();
+            entity.HasIndex(e => e.IdTipoCliente, "UQ__FichaFot__FE7DCABDAD011593").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AntesDisjuntorPe).HasColumnName("antesDisjuntorPE");
@@ -281,6 +281,7 @@ public partial class RigelSolarContext : DbContext
             entity.Property(e => e.IdTipoCliente).HasColumnName("idTipoCliente");
             entity.Property(e => e.IdTipoLigacao).HasColumnName("idTipoLigacao");
             entity.Property(e => e.IdTipoSuperficie).HasColumnName("idTipoSuperficie");
+            entity.Property(e => e.IdVistoria).HasColumnName("idVistoria");
             entity.Property(e => e.LarguraDcp)
                 .HasColumnType("decimal(4, 2)")
                 .HasColumnName("larguraDCP");
@@ -362,11 +363,15 @@ public partial class RigelSolarContext : DbContext
             entity.HasOne(d => d.IdTipoSuperficieNavigation).WithOne(p => p.FichaFotovoltaico)
                 .HasForeignKey<FichaFotovoltaico>(d => d.IdTipoSuperficie)
                 .HasConstraintName("FK__FichaFoto__idTip__3C34F16F");
+
+            entity.HasOne(d => d.IdVistoriaNavigation).WithMany(p => p.FichaFotovoltaicos)
+                .HasForeignKey(d => d.IdVistoria)
+                .HasConstraintName("FK__FichaFoto__idVis__3D2915A8");
         });
 
         modelBuilder.Entity<FichaPiscina>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FichaPis__3213E83FD9B9BB4D");
+            entity.HasKey(e => e.Id).HasName("PK__FichaPis__3213E83F9A974F46");
 
             entity.ToTable("FichaPiscina");
 
@@ -405,7 +410,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<Foto>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Fotos__3213E83FFFAFB0A1");
+            entity.HasKey(e => e.Id).HasName("PK__Fotos__3213E83F3865D8CE");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Foto1)
@@ -421,24 +426,24 @@ public partial class RigelSolarContext : DbContext
 
             entity.HasOne(d => d.IdFichaBanhoNavigation).WithMany(p => p.Fotos)
                 .HasForeignKey(d => d.IdFichaBanho)
-                .HasConstraintName("FK__Fotos__idFichaBa__3F115E1A");
+                .HasConstraintName("FK__Fotos__idFichaBa__40058253");
 
             entity.HasOne(d => d.IdFichaFotovoltaicoNavigation).WithMany(p => p.Fotos)
                 .HasForeignKey(d => d.IdFichaFotovoltaico)
-                .HasConstraintName("FK__Fotos__idFichaFo__40F9A68C");
+                .HasConstraintName("FK__Fotos__idFichaFo__41EDCAC5");
 
             entity.HasOne(d => d.IdFichaPiscinaNavigation).WithMany(p => p.Fotos)
                 .HasForeignKey(d => d.IdFichaPiscina)
-                .HasConstraintName("FK__Fotos__idFichaPi__40058253");
+                .HasConstraintName("FK__Fotos__idFichaPi__40F9A68C");
         });
 
         modelBuilder.Entity<Gestor>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Gestor__3213E83FE32608F6");
+            entity.HasKey(e => e.Id).HasName("PK__Gestor__3213E83FFD72781E");
 
             entity.ToTable("Gestor");
 
-            entity.HasIndex(e => e.IdUsuario, "UQ__Gestor__4E3E04ACA3DBC50E").IsUnique();
+            entity.HasIndex(e => e.IdUsuario, "UQ__Gestor__4E3E04AC0342D4F7").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
@@ -450,7 +455,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<IdadeTelhado>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__IdadeTel__3213E83FE3359C05");
+            entity.HasKey(e => e.Id).HasName("PK__IdadeTel__3213E83F4E4B2F59");
 
             entity.ToTable("IdadeTelhado");
 
@@ -460,7 +465,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<LocalInstalacaoModulo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LocalIns__3213E83F03560041");
+            entity.HasKey(e => e.Id).HasName("PK__LocalIns__3213E83F636388E2");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Local)
@@ -471,7 +476,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<MaterialVigasTelhado>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Material__3213E83F829ED1C6");
+            entity.HasKey(e => e.Id).HasName("PK__Material__3213E83FC6948E2F");
 
             entity.ToTable("MaterialVigasTelhado");
 
@@ -484,7 +489,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<ModeloRelogio>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ModeloRe__3213E83F78B4737B");
+            entity.HasKey(e => e.Id).HasName("PK__ModeloRe__3213E83FBA88E228");
 
             entity.ToTable("ModeloRelogio");
 
@@ -497,7 +502,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<NivelamentoSolo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Nivelame__3213E83FAEF69974");
+            entity.HasKey(e => e.Id).HasName("PK__Nivelame__3213E83F8D77591D");
 
             entity.ToTable("NivelamentoSolo");
 
@@ -510,11 +515,11 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<Tecnico>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Tecnico__3213E83F8FB0857B");
+            entity.HasKey(e => e.Id).HasName("PK__Tecnico__3213E83F9DDA108C");
 
             entity.ToTable("Tecnico");
 
-            entity.HasIndex(e => e.IdUsuario, "UQ__Tecnico__645723A788CFAD0F").IsUnique();
+            entity.HasIndex(e => e.IdUsuario, "UQ__Tecnico__645723A735442EB8").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Crea)
@@ -531,7 +536,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<TelhadoAcesso>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TelhadoA__3213E83FAD39676A");
+            entity.HasKey(e => e.Id).HasName("PK__TelhadoA__3213E83F1077BDD0");
 
             entity.ToTable("TelhadoAcesso");
 
@@ -544,7 +549,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<TensaoNominal>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TensaoNo__3213E83F732460CC");
+            entity.HasKey(e => e.Id).HasName("PK__TensaoNo__3213E83FDB5F14E2");
 
             entity.ToTable("TensaoNominal");
 
@@ -557,7 +562,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<TipoCliente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TipoClie__3213E83FEFDBF5CD");
+            entity.HasKey(e => e.Id).HasName("PK__TipoClie__3213E83FBA53F513");
 
             entity.ToTable("TipoCliente");
 
@@ -571,7 +576,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<TipoLigacao>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TipoLiga__3213E83FE5301A48");
+            entity.HasKey(e => e.Id).HasName("PK__TipoLiga__3213E83FFC186E8F");
 
             entity.ToTable("TipoLigacao");
 
@@ -584,7 +589,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<TipoSuperficie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__TipoSupe__3213E83FD88CF636");
+            entity.HasKey(e => e.Id).HasName("PK__TipoSupe__3213E83F57B91B1B");
 
             entity.ToTable("TipoSuperficie");
 
@@ -597,7 +602,7 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Usuario__3213E83FE140C7A4");
+            entity.HasKey(e => e.Id).HasName("PK__Usuario__3213E83FECB031DA");
 
             entity.ToTable("Usuario");
 
@@ -619,12 +624,31 @@ public partial class RigelSolarContext : DbContext
 
         modelBuilder.Entity<Vistorium>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Vistoria__3213E83F762B9C11");
+            entity.HasKey(e => e.Id).HasName("PK__Vistoria__3213E83F89C25257");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Comentarios)
+                .HasMaxLength(355)
+                .IsUnicode(false)
+                .HasColumnName("comentarios");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCoordenador).HasColumnName("idCoordenador");
             entity.Property(e => e.IdTecnico).HasColumnName("idTecnico");
+            entity.Property(e => e.PretendeInstalarEm)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("pretendeInstalarEm");
+            entity.Property(e => e.Solucoes)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("solucoes");
+            entity.Property(e => e.TipoInstalacao)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("tipoInstalacao");
+            entity.Property(e => e.ValorContaLuz)
+                .HasColumnType("money")
+                .HasColumnName("valorContaLuz");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Vistoria)
                 .HasForeignKey(d => d.IdCliente)

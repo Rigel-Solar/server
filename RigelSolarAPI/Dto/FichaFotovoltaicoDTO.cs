@@ -84,3 +84,8 @@ public class FichaFotovoltaicoDTO
 
     public virtual TipoSuperficieDTO? TipoSuperficieDTO { get; set; }
 }
+
+public class GetFichaFotovoltaicoDTO : FichaFotovoltaicoDTO
+{
+    public int Id { get; set; }
+}

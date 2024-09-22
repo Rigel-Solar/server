@@ -2,8 +2,6 @@
 
 public class ClienteDTO
 {
-    public int Id { get; set; }
-
     public string Tipo { get; set; } = null!;
     public string Nome { get; set; } = null!;
     public string Email { get; set; } = null!;
@@ -12,4 +10,9 @@ public class ClienteDTO
     public decimal Latitude { get; set; }
 
     public decimal Longitude { get; set; }
+}
+
+public class GetClienteDTO : ClienteDTO
+{
+    public int Id { get; set; }
 }

@@ -16,3 +16,8 @@ public class FichaBanhoDTO
 
     public int? IdVistoria { get; set; }
 }
+
+public class GetFichaBanhoDTO : FichaBanhoDTO
+{
+    public int Id { get; set; }
+}
