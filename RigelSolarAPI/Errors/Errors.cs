@@ -9,6 +9,11 @@ public static class Errors
         description: "Credenciais Inválidas"
     );
 
+    public static Error UsuarioJaCadastrado => Error.Validation(
+        code: "Usuario.UsuarioJaCadastrado",
+        description: "Usuario já cadastrado"
+    );
+
     public static Error NivelDeAcessoIncompativel => Error.Forbidden(
         code: "Usuario.NivelDeAcessoIncompativel",
         description: "Nível De Acesso Incompatível"

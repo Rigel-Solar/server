@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RigelSolarAPI.BLL;
 using RigelSolarAPI.Utils;
 
@@ -16,7 +17,7 @@ namespace RigelSolarAPI.Controllers
         {
             _loginBLL = loginBLL;
         }
-        
+
         /// <summary>
         ///     Realiza login de usuários no sistema
         /// </summary>
@@ -27,9 +28,8 @@ namespace RigelSolarAPI.Controllers
         /// 
         /// <returns> Token </returns>
         /// 
-
+        [AllowAnonymous]
         [HttpPost]
-
         [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)

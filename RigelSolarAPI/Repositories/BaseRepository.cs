@@ -17,7 +17,20 @@ public class BaseRepository<T> where T : class
 
     public IEnumerable<T> GetAll()
     {
-        return _dbSet.ToList();
+        IQueryable<T> query = _dbSet.AsQueryable();
+
+        // Obter todas as propriedades de navegação da entidade
+        var navigationProperties = _context.Model.FindEntityType(typeof(T))
+            .GetNavigations()
+            .Select(n => n.Name);
+
+        // Adicionar Include dinamicamente para cada propriedade de navegação
+        foreach (var navigationProperty in navigationProperties)
+        {
+            query = query.Include(navigationProperty);
+        }
+
+        return query.ToList();
     }
 
     public T Add(T entity)

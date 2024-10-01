@@ -5,6 +5,9 @@ using RigelSolarAPI.Data;
 using RigelSolarAPI.MappingConfig;
 using RigelSolarAPI.Repositories;
 using RigelSolarAPI.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,11 +64,25 @@ builder.Services.AddScoped<UsuarioRepository>();
 builder.Services.AddScoped<FichaBanhoRepository>();
 builder.Services.AddScoped<FichaPiscinaRepository>();
 builder.Services.AddScoped<FichaFotovoltaicoRepository>();
+builder.Services.AddScoped<VistoriaRepository>();
 builder.Services.AddScoped<JwtConfig>();
 builder.Services.AddScoped<Encrypt>();
 builder.Services.AddScoped<GenerateJwt>();
 builder.Services.AddScoped<LoginBLL>();
+builder.Services.AddScoped<CadastrarBLL>();
 
+builder.Services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration.GetSection("JwtSettings").GetValue<string>("Issuer"),
+        ValidAudience = builder.Configuration.GetSection("JwtSettings").GetValue<string>("Audience"),
+        IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtSettings").GetValue<string>("SecretKey")!))
+    });
 
 var app = builder.Build();
 
@@ -78,6 +95,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

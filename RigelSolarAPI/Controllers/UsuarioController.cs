@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using RigelSolarAPI.BLL;
 using RigelSolarAPI.Dto;
 using RigelSolarAPI.Models;
 using RigelSolarAPI.Repositories;
@@ -13,14 +14,20 @@ namespace RigelSolarAPI.Controllers
     public class UsuarioController : ApiController
     {
         private readonly UsuarioRepository _usuarioRepository;
+        private readonly CadastrarBLL _cadastrarBLL;
+        private readonly Encrypt _encrypt;
         private readonly IMapper _mapper;
 
         public UsuarioController(
             UsuarioRepository usuarioRepository,
+            Encrypt encrypt,
+            CadastrarBLL cadastrarBLL,
             IMapper mapper
         )
         {
             _usuarioRepository = usuarioRepository;
+            _encrypt = encrypt;
+            _cadastrarBLL = cadastrarBLL;
             _mapper = mapper;
         }
 
@@ -69,7 +76,7 @@ namespace RigelSolarAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Create(UsuarioDTO usuario)
+        public async Task<IActionResult> Create(UsuarioDTO usuario)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -80,7 +87,18 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isCoordenador.Errors);
             }
 
+            var usuarioExists = await _cadastrarBLL.Handle(usuario.Email);
+
+            if(usuarioExists.IsError)
+            {
+                return Problem(usuarioExists.Errors);
+            }
+
             var usuarioMapeado = _mapper.Map<Usuario>(usuario);
+
+            var encryptedPassword = usuarioMapeado.Senha;
+
+            usuarioMapeado.Senha = _encrypt.ToEncrypt(encryptedPassword);
 
             _usuarioRepository.Add(usuarioMapeado);
 
