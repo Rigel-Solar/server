@@ -1,6 +1,0 @@
-@RigelSolarAPI_HostAddress = http://localhost:5193
-
-GET {{RigelSolarAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

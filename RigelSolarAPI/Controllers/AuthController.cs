@@ -34,13 +34,21 @@ namespace RigelSolarAPI.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var servico = await _loginBLL.Handle(request);
+            try
+            {
+                var servico = await _loginBLL.Handle(request);
 
-            return servico.Match
-            (
-                success => Ok(success),
-                erros => Problem(erros)
-            );
+                return servico.Match
+                (
+                    success => Ok(success),
+                    erros => Problem(erros)
+                );
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
     }
 }
