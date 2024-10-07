@@ -46,7 +46,7 @@ namespace RigelSolarAPI.Controllers
             }
             catch(Exception e)
             {
-                throw new Exception(e.Message);
+                return BadRequest(e.Message);
             }
             
         }
