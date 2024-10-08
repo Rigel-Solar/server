@@ -15,7 +15,8 @@ public class VerifyUser
     public static ErrorOr<bool> IsGestor(string tipo)
     {
         var _gestor = "gestor";
-        if (tipo == _gestor)
+        var _coordenador = "coordenador";
+        if (tipo == _gestor || tipo == _coordenador)
             return true;
         else return Errors.Errors.NivelDeAcessoIncompativel;
     }
@@ -23,7 +24,8 @@ public class VerifyUser
     public static ErrorOr<bool> IsTecnico(string tipo)
     {
         var _tecnico = "tecnico";
-        if (tipo == _tecnico)
+        var _coordenador = "coordenador";
+        if (tipo == _tecnico || tipo == _coordenador)
             return true;
         else return Errors.Errors.NivelDeAcessoIncompativel;
     }
