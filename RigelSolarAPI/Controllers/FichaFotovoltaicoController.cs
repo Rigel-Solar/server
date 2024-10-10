@@ -36,7 +36,7 @@ namespace RigelSolarAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<GetFichaFotovoltaicoDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -47,9 +47,9 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isTecnico.Errors);
             }
 
-            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "sub")?.Value!);
+            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "idTecnico")?.Value!);
 
-            var fichasFotovoltaico = _fichaFotovoltaicoRepository.GetAllByTecnicoId(tecnicoId);
+            var fichasFotovoltaico = await _fichaFotovoltaicoRepository.GetAllByTecnicoId(tecnicoId);
 
             var mappedFichasFotovoltaico = _mapper.Map<List<GetFichaFotovoltaicoDTO>>(fichasFotovoltaico);
 
@@ -137,7 +137,6 @@ namespace RigelSolarAPI.Controllers
             if (isTecnico.IsError)
             {
                 return Problem(isTecnico.Errors);
-
             }
             await _fichaFotovoltaicoRepository.Delete(id);
 

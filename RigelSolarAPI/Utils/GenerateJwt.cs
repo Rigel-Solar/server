@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RigelSolarAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 
@@ -30,7 +31,7 @@ public class GenerateJwt
 
         var claims = new[]
         {
-                new Claim(JwtRegisteredClaimNames.Sub, tecnico.Id.ToString()),
+                new Claim("idTecnico", tecnico.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, tecnico.Crea),
                 new Claim(JwtRegisteredClaimNames.Typ, _tecnico),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -62,10 +63,10 @@ public class GenerateJwt
 
         var claims = new[]
         {
-                new Claim(JwtRegisteredClaimNames.Sub, gestor.Id.ToString()),
+                new Claim("idGestor", gestor.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, gestor.IdUsuarioNavigation.Nome),
                 new Claim(JwtRegisteredClaimNames.Typ, _gestor),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
         var securityToken = new JwtSecurityToken(
@@ -97,7 +98,9 @@ public class GenerateJwt
                 new Claim(JwtRegisteredClaimNames.Sub, coordenador.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, coordenador.IdTecnicoNavigation.IdUsuarioNavigation.Nome),
                 new Claim(JwtRegisteredClaimNames.Typ, _coordenador),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("idTecnico", coordenador.IdTecnico.ToString()),
+                new Claim("idGestor", coordenador.IdGestor.ToString())
         };
 
         var securityToken = new JwtSecurityToken(

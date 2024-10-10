@@ -36,7 +36,7 @@ namespace RigelSolarAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<GetFichaBanhoDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -47,9 +47,9 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isTecnico.Errors);
             }
 
-            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "sub")?.Value!);
+            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "idTecnico")?.Value!);
 
-            var fichasBanho = _fichaBanhoRepository.GetAllByTecnicoId(tecnicoId);
+            var fichasBanho = await _fichaBanhoRepository.GetAllByTecnicoId(tecnicoId);
 
             var mappedFichasBanho = _mapper.Map<List<GetFichaBanhoDTO>>(fichasBanho);
 

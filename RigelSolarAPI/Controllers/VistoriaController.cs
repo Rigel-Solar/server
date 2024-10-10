@@ -79,7 +79,7 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isTecnico.Errors);
             }
 
-            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "sub")?.Value!);
+            int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "idTecnico")?.Value!);
             
             var vistorias = _vistoriaRepository.GetAllByTecnicoId(tecnicoId);
 
