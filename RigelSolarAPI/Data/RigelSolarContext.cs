@@ -628,7 +628,7 @@ public partial class RigelSolarContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("comentarios");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
-            entity.Property(e => e.IdCoordenador).HasColumnName("idCoordenador");
+            entity.Property(e => e.IdGestor).HasColumnName("idGestor");
             entity.Property(e => e.IdTecnico).HasColumnName("idTecnico");
             entity.Property(e => e.PretendeInstalarEm)
                 .HasMaxLength(100)
@@ -650,9 +650,9 @@ public partial class RigelSolarContext : DbContext
                 .HasForeignKey(d => d.IdCliente)
                 .HasConstraintName("FK__Vistoria__idClie__02FC7413");
 
-            entity.HasOne(d => d.IdCoordenadorNavigation).WithMany(p => p.Vistoria)
-                .HasForeignKey(d => d.IdCoordenador)
-                .HasConstraintName("FK__Vistoria__idCoor__02084FDA");
+            entity.HasOne(d => d.IdGestorNavigation).WithMany(p => p.Vistoria)
+                .HasForeignKey(d => d.IdGestor)
+                .HasConstraintName("FK_Vistoria_Gestor");
 
             entity.HasOne(d => d.IdTecnicoNavigation).WithMany(p => p.Vistoria)
                 .HasForeignKey(d => d.IdTecnico)

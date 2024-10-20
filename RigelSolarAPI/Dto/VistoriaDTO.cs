@@ -4,7 +4,7 @@ namespace RigelSolarAPI.Dto;
 
 public class VistoriaDTO
 {
-    public int? IdCoordenador { get; set; }
+    public int? IdGestor { get; set; }
 
     public int? IdTecnico { get; set; }
 
@@ -33,7 +33,7 @@ public class GetVistoriaDTO : VistoriaDTO
 
     public virtual ClienteDTO? IdClienteNavigation { get; set; }
 
-    public virtual Coordenador? IdCoordenadorNavigation { get; set; }
+    public virtual GestorDTO? IdGestorNavigation { get; set; }
 
     public virtual TecnicoDTO? IdTecnicoNavigation { get; set; }
 }

@@ -10,15 +10,28 @@ public class MapperConfig : Profile
     {
         CreateMap<UsuarioDTO, Usuario>();
         CreateMap<Usuario, GetUsuarioDTO>();
-        CreateMap<ClienteDTO, Cliente>();
-        CreateMap<Cliente, GetClienteDTO>();
-        CreateMap<TecnicoDTO, Tecnico>();
+        CreateMap<Cliente, ClienteDTO>()
+            .ReverseMap();
+        CreateMap<Cliente, GetClienteDTO>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+        CreateMap<TecnicoDTO, Tecnico>()
+            .ReverseMap();
         CreateMap<Tecnico, GetTecnicoDTO>()
-            .ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => src.IdUsuarioNavigation));
+            .ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => src.IdUsuarioNavigation))
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
         CreateMap<FichaBanhoDTO, FichaBanho>();
-        CreateMap<FichaBanho, GetFichaBanhoDTO>();
+        CreateMap<FichaBanho, GetFichaBanhoDTO>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.VistoriaDTO, opt => opt.MapFrom(src => src.IdVistoriaNavigation))
+            .ReverseMap();
         CreateMap<FichaPiscinaDTO, FichaPiscina>();
         CreateMap<FichaPiscina, GetFichaPiscinaDTO>();
+        CreateMap<FichaPiscina, GetFichaPiscinaDTO>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.VistoriaDTO, opt => opt.MapFrom(src => src.IdVistoriaNavigation))
+            .ReverseMap();
         CreateMap<CondicaoPadraoEntradaDTO, CondicaoPadraoEntradum>(); //
         CreateMap<CondicaoQuadroPrincipalDTO, CondicaoQuadroPrincipalEnergium>();
         CreateMap<CondicaoVigaDTO, CondicaoViga>();
@@ -61,8 +74,31 @@ public class MapperConfig : Profile
             .ForMember(dest => dest.TipoClienteDTO, opt => opt.MapFrom(src => src.IdTipoClienteNavigation))
             .ForMember(dest => dest.TipoLigacaoDTO, opt => opt.MapFrom(src => src.IdTipoLigacaoNavigation))
             .ForMember(dest => dest.TipoSuperficieDTO, opt => opt.MapFrom(src => src.IdTipoSuperficieNavigation))
-            ;
-        CreateMap<VistoriaDTO, Vistorium>();
-        CreateMap<Vistorium, GetVistoriaDTO>();
+            .ForMember(dest => dest.VistoriaDTO, opt => opt.MapFrom(src => src.IdVistoriaNavigation))
+            .ReverseMap();
+        ;
+        CreateMap<Vistorium, VistoriaDTO>()
+            .ReverseMap();
+
+        CreateMap<Vistorium, GetVistoriaDTO>()
+            .ForMember(dest => dest.FichaBanhos, opt => opt.MapFrom(src => src.FichaBanhos))
+            .ForMember(dest => dest.FichaFotovoltaicos, opt => opt.MapFrom(src => src.FichaFotovoltaicos))
+            .ForMember(dest => dest.FichaPiscinas, opt => opt.MapFrom(src => src.FichaPiscinas))
+            .ForMember(dest => dest.IdClienteNavigation, opt => opt.MapFrom(src => src.IdClienteNavigation))
+            .ForMember(dest => dest.IdGestorNavigation, opt => opt.MapFrom(src => src.IdGestorNavigation))
+            .ForMember(dest => dest.IdTecnicoNavigation, opt => opt.MapFrom(src => src.IdTecnicoNavigation))
+            .ReverseMap();
+        CreateMap<Vistorium, VistoriaFichaDTO>()
+                    .ReverseMap();
+
+        CreateMap<Vistorium, GetVistoriaFichaDTO>()
+            .ForMember(dest => dest.IdClienteNavigation, opt => opt.MapFrom(src => src.IdClienteNavigation))
+            .ForMember(dest => dest.IdGestorNavigation, opt => opt.MapFrom(src => src.IdGestorNavigation))
+            .ReverseMap();
+        CreateMap<Gestor, GestorDTO>()
+            .ForMember(dest => dest.IdUsuarioNavigation, opt => opt.MapFrom(src => src.IdUsuarioNavigation))
+            .ReverseMap();
+        CreateMap<Usuario, UsuarioDTO>()
+            .ReverseMap();
     }
 }

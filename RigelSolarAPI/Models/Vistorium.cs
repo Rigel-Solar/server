@@ -4,7 +4,7 @@ public partial class Vistorium
 {
     public int Id { get; set; }
 
-    public int? IdCoordenador { get; set; }
+    public int? IdGestor { get; set; }
 
     public int? IdTecnico { get; set; }
 
@@ -28,7 +28,7 @@ public partial class Vistorium
 
     public virtual Cliente? IdClienteNavigation { get; set; }
 
-    public virtual Coordenador? IdCoordenadorNavigation { get; set; }
+    public virtual Gestor? IdGestorNavigation { get; set; }
 
     public virtual Tecnico? IdTecnicoNavigation { get; set; }
 }

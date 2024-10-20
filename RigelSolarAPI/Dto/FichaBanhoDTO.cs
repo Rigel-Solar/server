@@ -1,4 +1,6 @@
-﻿namespace RigelSolarAPI.Dto;
+﻿using RigelSolarAPI.Models;
+
+namespace RigelSolarAPI.Dto;
 
 public class FichaBanhoDTO
 {
@@ -20,4 +22,5 @@ public class FichaBanhoDTO
 public class GetFichaBanhoDTO : FichaBanhoDTO
 {
     public int Id { get; set; }
+    public virtual GetVistoriaFichaDTO? VistoriaDTO { get; set; }
 }

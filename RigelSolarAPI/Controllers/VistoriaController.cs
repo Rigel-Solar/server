@@ -113,7 +113,11 @@ namespace RigelSolarAPI.Controllers
                 return Problem(isGestor.Errors);
             }
 
+            var idGestor = GetJwt().FirstOrDefault(c => c.Type == "idGestor")?.Value!;
+
             var mappedVistoria = _mapper.Map<Vistorium>(vistoria);
+
+            mappedVistoria.IdGestor = int.Parse(idGestor);
 
             _vistoriaRepository.Add(mappedVistoria);
 

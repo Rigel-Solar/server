@@ -12,4 +12,5 @@ public partial class Gestor
     public virtual Coordenador? Coordenador { get; set; }
 
     public virtual Usuario? IdUsuarioNavigation { get; set; }
+    public virtual ICollection<Vistorium> Vistoria { get; set; } = new List<Vistorium>();
 }

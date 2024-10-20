@@ -88,4 +88,5 @@ public class FichaFotovoltaicoDTO
 public class GetFichaFotovoltaicoDTO : FichaFotovoltaicoDTO
 {
     public int Id { get; set; }
+    public virtual GetVistoriaFichaDTO? VistoriaDTO { get; set; }
 }

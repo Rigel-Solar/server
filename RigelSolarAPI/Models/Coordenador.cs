@@ -15,5 +15,4 @@ public partial class Coordenador
 
     public virtual Tecnico? IdTecnicoNavigation { get; set; }
 
-    public virtual ICollection<Vistorium> Vistoria { get; set; } = new List<Vistorium>();
 }

@@ -22,5 +22,6 @@ public class FichaPiscinaDTO
 public class GetFichaPiscinaDTO : FichaPiscinaDTO
 {
     public int Id { get; set; }
+    public virtual GetVistoriaFichaDTO? VistoriaDTO { get; set; }
 }
 
