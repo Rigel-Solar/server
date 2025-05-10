@@ -9,7 +9,7 @@ public class FichaFotovoltaicoRepository : BaseRepository<FichaFotovoltaico>
     public FichaFotovoltaicoRepository(RigelSolarContext context) : base(context)
     {
     }
-    
+
     public async Task<FichaFotovoltaico?> GetAllByTecnicoId(int Id)
     {
         FichaFotovoltaico? fichaFotovoltaico = await _context

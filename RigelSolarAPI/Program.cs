@@ -8,7 +8,18 @@ using RigelSolarAPI.MappingConfig;
 using RigelSolarAPI.Repositories;
 using RigelSolarAPI.Utils;
 using System.Text;
+using Resend;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOptions();
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>(o =>
+{
+    o.ApiToken = Environment.GetEnvironmentVariable("RESEND_APITOKEN")!;
+});
+builder.Services.AddTransient<IResend, ResendClient>();
+
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddCors(options =>
 {
@@ -67,12 +78,15 @@ builder.Services.AddScoped<UsuarioRepository>();
 builder.Services.AddScoped<FichaBanhoRepository>();
 builder.Services.AddScoped<FichaPiscinaRepository>();
 builder.Services.AddScoped<FichaFotovoltaicoRepository>();
+builder.Services.AddScoped<FotoRepository>();
 builder.Services.AddScoped<VistoriaRepository>();
 builder.Services.AddScoped<JwtConfig>();
 builder.Services.AddScoped<Encrypt>();
 builder.Services.AddScoped<GenerateJwt>();
 builder.Services.AddScoped<LoginBLL>();
 builder.Services.AddScoped<CadastrarBLL>();
+builder.Services.AddScoped<SendEmail>();
+builder.Services.AddScoped<BlobStorage>();
 builder.Services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {
