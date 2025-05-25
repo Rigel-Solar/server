@@ -19,19 +19,70 @@ public class BaseRepository<T> where T : class
     {
         IQueryable<T> query = _dbSet.AsQueryable();
 
-        // Obter todas as propriedades de navegação da entidade
-        var navigationProperties = _context.Model.FindEntityType(typeof(T))
-            .GetNavigations()
-            .Select(n => n.Name);
-
-        // Adicionar Include dinamicamente para cada propriedade de navegação
-        foreach (var navigationProperty in navigationProperties)
-        {
-            query = query.Include(navigationProperty);
-        }
+        // Recursively include all navigation properties and their nested properties
+        query = IncludeNavigations(query, typeof(T), new HashSet<Type>());
 
         return query.ToList();
     }
+
+    private IQueryable<T> IncludeNavigations(IQueryable<T> query, Type entityType, HashSet<Type> visitedTypes)
+    {
+        // Avoid processing the same entity type multiple times (to prevent cycles)
+        if (!visitedTypes.Add(entityType))
+        {
+            return query; // Skip this entity type
+        }
+
+        // Get all navigation properties of the current entity type
+        var navigationProperties = _context.Model.FindEntityType(entityType)
+            .GetNavigations()
+            .ToList();
+
+        foreach (var navigation in navigationProperties)
+        {
+            // Include the navigation property
+            query = query.Include(navigation.Name);
+
+            // Check if this navigation property itself has navigation properties (i.e., it's a complex type or a collection)
+            var nestedEntityType = navigation.ClrType;
+
+            // Only recurse if the navigation target type has additional navigations
+            if (_context.Model.FindEntityType(nestedEntityType)?.GetNavigations().Any() == true)
+            {
+                // Use ThenInclude with recursion
+                query = IncludeNestedNavigation(query, navigation.Name, nestedEntityType, visitedTypes);
+            }
+        }
+
+        return query;
+    }
+
+    private IQueryable<T> IncludeNestedNavigation(IQueryable<T> query, string navigationProperty, Type entityType, HashSet<Type> visitedTypes)
+    {
+        // Avoid processing the same entity type multiple times (to prevent cycles)
+        if (!visitedTypes.Add(entityType))
+        {
+            return query; // Skip this entity type
+        }
+
+        // Get all navigation properties of the nested entity type
+        var nestedNavigations = _context.Model.FindEntityType(entityType).GetNavigations().ToList();
+
+        foreach (var nestedNavigation in nestedNavigations)
+        {
+            // Apply ThenInclude for each nested navigation property
+            query = query.Include($"{navigationProperty}.{nestedNavigation.Name}");
+
+            // Recursively add ThenIncludes if the nested navigation has further navigation properties
+            if (_context.Model.FindEntityType(nestedNavigation.ClrType)?.GetNavigations().Any() == true)
+            {
+                query = IncludeNestedNavigation(query, $"{navigationProperty}.{nestedNavigation.Name}", nestedNavigation.ClrType, visitedTypes);
+            }
+        }
+
+        return query;
+    }
+
 
     public T Add(T entity)
     {

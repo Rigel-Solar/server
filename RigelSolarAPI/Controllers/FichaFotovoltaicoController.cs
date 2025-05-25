@@ -24,6 +24,38 @@ namespace RigelSolarAPI.Controllers
         }
 
         /// <summary>
+        ///     Retorna as fichas da aplicação
+        /// </summary>
+        /// 
+        /// 
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
+        /// 
+        /// <returns> Fichas </returns>
+        /// 
+        [HttpGet("getAll")]
+        [ProducesResponseType(typeof(List<GetVistoriaDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public IActionResult GetAll()
+        {
+            var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
+
+            var isGestor = VerifyUser.IsGestor(type);
+
+            var isCoordenador = VerifyUser.IsCoordenador(type);
+
+            if (isGestor.IsError && isCoordenador.IsError)
+            {
+                return Problem(isGestor.Errors);
+            }
+            var fichas = _fichaFotovoltaicoRepository.GetAll();
+
+            var mappedFichas = _mapper.Map<List<GetFichaFotovoltaicoDTO>>(fichas);
+
+            return Ok(mappedFichas);
+        }
+
+        /// <summary>
         ///     Retorna ficha fotovoltaico da aplicação
         /// </summary>
         /// 

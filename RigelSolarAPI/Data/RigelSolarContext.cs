@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RigelSolarAPI.Models;
 
 namespace RigelSolarAPI.Data;
@@ -415,10 +416,6 @@ public partial class RigelSolarContext : DbContext
             entity.Property(e => e.IdFichaBanho).HasColumnName("idFichaBanho");
             entity.Property(e => e.IdFichaFotovoltaico).HasColumnName("idFichaFotovoltaico");
             entity.Property(e => e.IdFichaPiscina).HasColumnName("idFichaPiscina");
-            entity.Property(e => e.TipoFoto)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("tipoFoto");
 
             entity.HasOne(d => d.IdFichaBanhoNavigation).WithMany(p => p.Fotos)
                 .HasForeignKey(d => d.IdFichaBanho)
@@ -661,6 +658,11 @@ public partial class RigelSolarContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
 
+        optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored));
+    }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -10,12 +10,13 @@ public class VistoriaRepository : BaseRepository<Vistorium>
     {
     }
 
-    public async Task<Vistorium?> GetAllByTecnicoId(int Id)
+    public async Task<List<Vistorium?>> GetAllByTecnicoId(int Id)
     {
-        Vistorium? vistoria = await _context
+        List<Vistorium?> vistoria = await _context
             .Vistoria
             .Include(x => x.IdTecnicoNavigation)
-            .FirstOrDefaultAsync(x => x.IdTecnicoNavigation.Id == Id);
+            .Where(x => x.IdTecnicoNavigation.Id == Id)
+            .ToListAsync();
 
         return vistoria;
     }

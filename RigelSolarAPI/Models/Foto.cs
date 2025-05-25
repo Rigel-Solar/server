@@ -9,8 +9,6 @@ public partial class Foto
 
     public string Foto1 { get; set; } = null!;
 
-    public string TipoFoto { get; set; } = null!;
-
     public int? IdFichaBanho { get; set; }
 
     public int? IdFichaPiscina { get; set; }

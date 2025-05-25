@@ -68,7 +68,7 @@ namespace RigelSolarAPI.Controllers
         [HttpGet("getByTecnicoId")]
         [ProducesResponseType(typeof(List<GetVistoriaDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult GetByTecnicoId()
+        public async Task<IActionResult> GetByTecnicoId()
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -81,7 +81,7 @@ namespace RigelSolarAPI.Controllers
 
             int tecnicoId = int.Parse(GetJwt().FirstOrDefault(c => c.Type == "idTecnico")?.Value!);
             
-            var vistorias = _vistoriaRepository.GetAllByTecnicoId(tecnicoId);
+            var vistorias = await _vistoriaRepository.GetAllByTecnicoId(tecnicoId);
 
             var mappedVistorias = _mapper.Map<List<GetVistoriaDTO>>(vistorias);
 
