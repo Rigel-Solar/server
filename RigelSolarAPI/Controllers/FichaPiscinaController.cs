@@ -130,7 +130,7 @@ namespace RigelSolarAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(FichaPiscinaDTO fichaPiscina)
+        public IActionResult Update([FromBody] FichaPiscinaDTO fichaPiscina, [FromQuery] int id)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -142,6 +142,8 @@ namespace RigelSolarAPI.Controllers
             }
 
             var fichaPiscinaMapeada = _mapper.Map<FichaPiscina>(fichaPiscina);
+
+            fichaPiscinaMapeada.Id = id;
 
             _fichaPiscinaRepository.Update(fichaPiscinaMapeada);
 

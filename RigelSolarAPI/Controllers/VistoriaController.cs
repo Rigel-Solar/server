@@ -136,7 +136,7 @@ namespace RigelSolarAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(VistoriaDTO vistoria)
+        public IActionResult Update([FromBody] VistoriaDTO vistoria, [FromQuery] int id)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -150,6 +150,8 @@ namespace RigelSolarAPI.Controllers
             }
 
             var mappedVistoria = _mapper.Map<Vistorium>(vistoria);
+
+            mappedVistoria.Id = id;
 
             _vistoriaRepository.Update(mappedVistoria);
 

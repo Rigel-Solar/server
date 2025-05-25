@@ -15,6 +15,10 @@ public class VistoriaRepository : BaseRepository<Vistorium>
         List<Vistorium?> vistoria = await _context
             .Vistoria
             .Include(x => x.IdTecnicoNavigation)
+                .ThenInclude(x => x.IdUsuarioNavigation)
+            .Include(x => x.IdClienteNavigation)
+            .Include(x => x.IdGestorNavigation)
+                .ThenInclude(x => x.IdUsuarioNavigation)
             .Where(x => x.IdTecnicoNavigation.Id == Id)
             .ToListAsync();
 

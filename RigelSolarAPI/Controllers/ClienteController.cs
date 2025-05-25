@@ -100,20 +100,22 @@ namespace RigelSolarAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(ClienteDTO cliente)
+        public IActionResult Update([FromBody] ClienteDTO cliente, [FromQuery] int id)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
             var isGestor = VerifyUser.IsGestor(type);
 
             var isCoordenador = VerifyUser.IsCoordenador(type);
-
+        
             if (isGestor.IsError && isCoordenador.IsError)
             {
                 return Problem(isGestor.Errors);
             }
 
             var clienteMapeado = _mapper.Map<Cliente>(cliente);
+
+            clienteMapeado.Id = id;
 
             _clienteRepository.Update(clienteMapeado);
 

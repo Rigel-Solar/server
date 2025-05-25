@@ -117,7 +117,7 @@ namespace RigelSolarAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(UsuarioDTO usuario)
+        public IActionResult Update([FromBody] UsuarioDTO usuario, [FromQuery] int id)
         {
             var type = GetJwt().FirstOrDefault(c => c.Type == "typ")?.Value!;
 
@@ -129,6 +129,8 @@ namespace RigelSolarAPI.Controllers
             }
 
             var usuarioMapeado = _mapper.Map<Usuario>(usuario);
+
+            usuarioMapeado.Id = id; 
 
             _usuarioRepository.Update(usuarioMapeado);
 
