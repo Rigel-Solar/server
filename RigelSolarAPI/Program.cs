@@ -87,6 +87,7 @@ builder.Services.AddScoped<LoginBLL>();
 builder.Services.AddScoped<CadastrarBLL>();
 builder.Services.AddScoped<SendEmail>();
 builder.Services.AddScoped<BlobStorage>();
+builder.Services.AddScoped<EmailSMTP>();
 builder.Services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {

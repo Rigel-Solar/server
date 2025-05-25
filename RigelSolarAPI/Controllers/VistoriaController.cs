@@ -12,15 +12,18 @@ namespace RigelSolarAPI.Controllers
     public class VistoriaController : ApiController
     {
         private readonly VistoriaRepository _vistoriaRepository;
+        private readonly EmailSMTP _emailSMTP;
         private readonly IMapper _mapper;
 
         public VistoriaController(
             VistoriaRepository vistoriaRepository,
+            EmailSMTP emailSMTP,
             IMapper mapper
         )
         {
             _vistoriaRepository = vistoriaRepository;
             _mapper = mapper;
+            _emailSMTP = emailSMTP;
         }
 
         /// <summary>
@@ -119,7 +122,13 @@ namespace RigelSolarAPI.Controllers
 
             mappedVistoria.IdGestor = int.Parse(idGestor);
 
-            _vistoriaRepository.Add(mappedVistoria);
+            var vistoriaCriada = _vistoriaRepository.Add(mappedVistoria);
+
+            var buscarVistoria = _vistoriaRepository.GetById(vistoriaCriada.Id);
+
+            string mensagem = $"Olá, {buscarVistoria.IdClienteNavigation.Nome}, sua vistoria foi agendada com sucesso.\n Técnico responsável: {buscarVistoria.IdTecnicoNavigation.IdUsuarioNavigation.Nome} - CREA: {buscarVistoria.IdTecnicoNavigation.Crea}";
+
+            _emailSMTP.Enviar(buscarVistoria.IdClienteNavigation.Email, "Notificação Vistoria", mensagem);
 
             return Ok();
         }

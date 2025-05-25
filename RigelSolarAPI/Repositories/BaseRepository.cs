@@ -111,7 +111,14 @@ public class BaseRepository<T> where T : class
 
     public T GetById(object id)
     {
-        return _dbSet.Find(id);
+        IQueryable<T> query = _dbSet.AsQueryable();
+
+        // Incluir navegações recursivamente
+        query = IncludeNavigations(query, typeof(T), new HashSet<Type>());
+
+        var key = _context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.First();
+
+        return query.FirstOrDefault(e => EF.Property<object>(e, key.Name).Equals(id));
     }
 
     public void Save()
